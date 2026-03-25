@@ -1,7 +1,6 @@
 # Nous voulons un cmake "récent" pour utiliser les dernières fonctionnalités
 cmake_minimum_required(VERSION 3.24)
-project("td01")
-
+project("td03")
 # Trouve tous les fichiers .cpp dans mon répertoire src
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS "src/*.cpp")
 
@@ -9,10 +8,11 @@ file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS "src/*.cpp")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 # On indique que l'on souhaite faire un exécutable avec nos fichiers .cpp
-add_executable(helloImac ${SRC_FILES})
+add_executable(td03 ${SRC_FILES})
+target_compile_features(td03 PRIVATE cxx_std_20)
 
 # le dossier contenant les fichiers d'en-tête pour notre executable helloImac
-target_include_directories(helloImac PUBLIC "src/")
+target_include_directories(td03 PUBLIC "src/")
 
 if (MSVC)
     add_compile_options(/W3)
