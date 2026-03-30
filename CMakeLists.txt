@@ -6,3 +6,4 @@ project(TD_S2)
 # On indique que l'on veut créer un exécutable "ex01" compilé à partir du fichier td01_ex01.cpp
 add_executable(td03_ex01 src/td03_ex01.cpp)
 add_executable(td03_ex02 src/td03_ex02.cpp)
+add_executable(td03_ex03 src/td03_ex03.cpp)
