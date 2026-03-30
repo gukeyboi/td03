@@ -21,7 +21,7 @@ void bubble_sort(std::vector<int> &vec)
 
 int main()
 {
-    std::vector<int> array{12, 3, 7, 5, 6};
+    std::vector<int> array{12, 3, 7, 5, 6, 9, 2, 98};
     bubble_sort(array);
     for (int x : array)
         std::cout << x << ' ';
