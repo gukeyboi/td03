@@ -23,11 +23,8 @@ int search(std::vector<int> & vec, size_t const left, size_t const right, int se
 
 int main() {
     int const size = 10000;
-
     std::vector<int> array {3, 5, 7, 8, 13, 15, 26};
-
-    
-
+    std::cout << "je cherche le 13 : " << search(array, 0, array.size()-1, 13) << std::endl;
     return 0;
 }
 
