@@ -24,17 +24,10 @@ size_t folding_string_ordered_hash(std::string const& s, size_t max) {
     
 }
 
-enum Direction {
-    Haut,
-    Bas,
-    Gauche,
-    Droite
-}
 
-struct Position {
-    
-}
+
+
 
 int main() {
-    std::cout << folding_string_ordered_hash("abc", 2000000000) << std::endl;
+    std::cout << folding_string_ordered_hash("coucou", 5000) << std::endl;
 }
