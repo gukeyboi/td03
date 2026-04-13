@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iostream>
 #include <fstream>
+#include <unordered_set>
 
 size_t folding_string_hash(std::string const& s, size_t max) {
     size_t total = 0;
@@ -71,8 +72,29 @@ Position(size_t x, size_t y) : x(x), y(y) {}
     }
     return *this;
     };
+
+    Position operator+(Direction const& a) const {
+        Position result = *this;
+        result += a;
+        return result;
+    }
 };
 
+
+namespace std {
+    template <>
+    struct hash<Position> {
+        std::size_t operator()(const Position& pos) const {
+            return std::hash<int>{}(pos.x) * 31 + std::hash<int>{}(pos.y);;
+        }
+    };
+}
+
+struct WalkResult {
+    Position final_position;
+    size_t steps_taken;
+    std::unordered_set<Position> visited_positions;
+};
 
 struct Input_Structure {
     Position gardePos;
@@ -213,6 +235,32 @@ void printMap(Input_Structure const& mapimap) {
     
 }
 
+WalkResult simulate_guard(Input_Structure mapimap) {
+    WalkResult walk_result;
+
+    walk_result.steps_taken = 0;
+    walk_result.visited_positions.insert(mapimap.gardePos);
+
+    while(true) {
+        Position next_position = mapimap.gardePos + mapimap.gardeDir;
+
+        if(next_position.x >= mapimap.mapWidth || next_position.y >= mapimap.mapHeight || next_position.x < 0 || next_position.y < 0) {
+            break;
+        }
+
+        if(isObstacle(mapimap.obstacles, next_position)) {
+            mapimap.gardeDir = turn_right(mapimap.gardeDir);
+        } else {
+            mapimap.gardePos = next_position;
+            walk_result.visited_positions.insert(next_position);
+            walk_result.steps_taken++;
+        }
+    }
+    walk_result.final_position = {mapimap.gardePos.x, mapimap.gardePos.y};
+    return walk_result;
+}
+
+
 int main() {
 
     std::ifstream file("../src/td05/map.txt");
@@ -223,6 +271,9 @@ int main() {
     }
 
     Input_Structure map = read_input(file);
+    WalkResult result = simulate_guard(map);
+
+    std::cout << result.visited_positions.size() << std::endl;
 
     printMap(map);
 
